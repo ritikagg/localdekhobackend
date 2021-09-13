@@ -61,7 +61,7 @@ const __dirname = path.resolve();
 app.use("/uploads", express.static(path.join(__dirname, "/uploads")));
 
 app.get("/", (req, res) => {
-  res.send("API is running....");
+  res.send("API is running on heroku....");
 });
 
 app.use(errorMiddleware.notFound);
