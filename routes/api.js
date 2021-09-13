@@ -64,17 +64,47 @@ router.get("/sendOTP", (req, res) => {
   res.status(200).send({ mobile, hash: fullHash, otp });
 });
 
-router.post("/api/getAddressLine", (req, res) => {
+router.post("/api/getAddressLine", async (req, res) => {
   const lat = req.body.lat;
   const lng = req.body.lng;
   const uri = `https://www.swiggy.com/dapi/misc/reverse-geocode`;
   try {
-    const addressLine = axios.get(uri, {
+    const response = await axios.get(uri, {
       params: {
         latlng: lat + `,` + lng,
       },
     });
-    res.status(200).send({ addressLine: addressLine });
+
+    const data = response.data.data[0].address_components;
+
+    const sublocality_level_1 = data.filter((item) => {
+      if (item.types.includes("sublocality_level_1")) {
+        return item;
+      }
+    });
+
+    const administrative_area_level_2 = data.filter((item) => {
+      if (item.types.includes("administrative_area_level_2")) {
+        return item;
+      }
+    });
+
+    console.log(administrative_area_level_2);
+    const postal_code = data.filter((item) => {
+      if (item.types.includes("postal_code")) {
+        return item;
+      }
+    });
+
+    const addressLine =
+      sublocality_level_1[0].short_name +
+      `, ` +
+      administrative_area_level_2[0].short_name;
+
+    res.status(200).send({
+      addressLine: addressLine,
+      postal_code: postal_code[0].short_name,
+    });
   } catch (e) {
     console.log(e);
   }
