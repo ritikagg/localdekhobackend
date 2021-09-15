@@ -4,13 +4,18 @@ import connectPool from "../config/db.js";
 async function getUserData(user_id) {
   try {
     var sql = `
-      select us.*, s.name as service_name, h.helper_name, h.contact_number 
-      from user_services as us
-      left join services as s 
-      on us.service_id = s.service_id
-      left join helper as h
-      on us.helper_id = h.helper_id
-      where us.user_id = ?;`;
+    select us.*, s.name as service_name, h.helper_name, h.contact_number,
+    hs.average_charges 
+    from user_services as us
+    left join services as s 
+    on us.service_id = s.service_id
+    left join helper as h
+    on us.helper_id = h.helper_id
+    left join helper_service as hs
+    on us.helper_id = hs.helper_id
+    where hs.helper_id = us.helper_id and 
+    hs.service_id = us.service_id and
+    us.user_id = ?;`;
 
     return new Promise((resolve, reject) => {
       connectPool.query(sql, [user_id], (err, resp) => {
@@ -29,7 +34,7 @@ async function getUserData(user_id) {
 async function getHelperData(helper_id) {
   try {
     var sql = `
-      select us.*, s.name as service_name, u.user_name, u.contact_number
+      select us.*, s.name as service_name, u.user_name, u.contact_number, u.address_json
       from user_services as us 
       left join services as s 
       on us.service_id = s.service_id 

@@ -9,6 +9,6 @@ router.post("/configHelper", helperConfigController.saveHelperConfig);
 router.post("/fetchHelpersDetails", helperConfigController.fetchHelperServices);
 router.put("/updateService", helperConfigController.updateServiceStatus);
 router.post("/addNewService", helperConfigController.addServiceDetails);
-router.post("/editService", helperConfigController.updateServiceDetails);
+router.put("/editService", helperConfigController.updateServiceDetails);
 
 export default router;

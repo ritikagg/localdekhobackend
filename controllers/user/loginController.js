@@ -36,6 +36,9 @@ const authUser = async (req, res) => {
       msg: "User verified",
       serviceHistory: servicehistories,
       userData: userData,
+      mobile: mobile,
+      isUser: true,
+      token: hash,
     });
   } else {
     console.log("Not Authenticated");

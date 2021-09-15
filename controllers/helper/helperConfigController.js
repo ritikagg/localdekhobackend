@@ -42,17 +42,21 @@ const fetchHelperServices = async (req, res) => {
 
 const addServiceDetails = async (req, res) => {
   if (req.method == "POST") {
-    var formData = req.body.formData;
+    var formData = req.body.formData.formData;
+    var name = req.body.name;
+    var helper_id = formData.helper_id;
+
     if (typeof formData !== "undefined") {
       var returnData = await HelperService.saveData(formData);
+      await HelperService.updateName(name, helper_id);
     }
     res.send({ success: true });
   }
 };
 
 const updateServiceDetails = async (req, res) => {
-  if (req.method == "POST") {
-    var formData = req.body.updateData;
+  if (req.method == "PUT") {
+    var formData = req.body.updateData.formData;
     var service_id = Number(req.body.service_id);
     var helper_id = Number(req.body.helper_id);
     if (typeof formData !== "undefined") {
