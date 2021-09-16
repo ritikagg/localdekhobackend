@@ -74,8 +74,27 @@ async function updateServiceStatusForAction(id, action) {
   }
 }
 
+async function updateServiceStatusForAccept(id, service_id, user_id, action) {
+  try {
+    var sql = `UPDATE user_services SET status = ? WHERE service_id = ? and user_id = ? and id != ?;`;
+
+    return new Promise((resolve, reject) => {
+      connectPool.query(sql, [action, service_id, user_id, id], (err, resp) => {
+        if (err) {
+          reject(err);
+        } else {
+          resolve(resp);
+        }
+      });
+    });
+  } finally {
+    //if (connectPool && connectPool.end) connectPool.end();
+  }
+}
+
 export default {
   getUserData,
   getHelperData,
   updateServiceStatusForAction,
+  updateServiceStatusForAccept,
 };

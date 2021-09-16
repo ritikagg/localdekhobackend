@@ -85,8 +85,20 @@ const updateServiceStatus = async (req, res) => {
   if (req.method == "PUT") {
     var id = req.body.id;
     var action = req.body.action;
+    var service_id = req.body.service_id;
+    var user_id = req.body.user_id;
+
     if (id) {
       await serviceHistory.updateServiceStatusForAction(id, action);
+    }
+
+    if ((id, service_id && user_id && action === "scheduled")) {
+      await serviceHistory.updateServiceStatusForAccept(
+        id,
+        service_id,
+        user_id,
+        "helper_declined"
+      );
     }
   }
   res.send({ success: true });
