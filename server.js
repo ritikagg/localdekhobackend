@@ -36,6 +36,23 @@ global.backendURL = "http://localhost:" + PORT;
 
 const app = express();
 
+// const Sentry = require("@sentry/node");
+// or use es6 import statements
+import * as Sentry from "@sentry/node";
+
+// const Tracing = require("@sentry/tracing");
+// or use es6 import statements
+import * as Tracing from "@sentry/tracing";
+
+Sentry.init({
+  dsn: "https://876c2d7f825e4d398416a6f50090d419@o1004679.ingest.sentry.io/5965708",
+
+  // Set tracesSampleRate to 1.0 to capture 100%
+  // of transactions for performance monitoring.
+  // We recommend adjusting this value in production
+  tracesSampleRate: 1.0,
+});
+
 if (process.env.NODE_ENV === "development") {
   app.use(morgan("dev"));
 }

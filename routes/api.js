@@ -21,8 +21,8 @@ router.get("/sendOTP", (req, res) => {
   const hash = crypto.createHmac("sha256", smsKey).update(data).digest("hex");
   const fullHash = `${hash}.${expires}`;
 
-  //if (!isDebugMobile) {
-  if (false) {
+  if (!isDebugMobile) {
+    // if (false) {
     try {
       const apiKEY = process.env.FAST2SMS_API_KEY;
 
