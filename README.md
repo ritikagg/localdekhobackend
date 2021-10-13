@@ -6,6 +6,12 @@
 
 **Backend:** https://localdekhobackend.herokuapp.com/
 
+- [Description](#description)
+- [About Project](#about-project)
+- [UP AND RUNNING](#up-and-running)
+- [Stack](#stack)
+- [Team Member](#team-member)
+
 ## Description
 
 We are building this project as a part of our Pesto curriculum. Our aim is to implement the technologies taught to us as a part of this career accelerator program and to come up with something using for the society.
@@ -77,6 +83,6 @@ $ npm run build
 
 2. **MySQL:** This is ratinonal database that is used for storing data.
 
-## Team Members
+## Team Member
 
 1.  [Ritik Aggarwal](https://github.com/ritikagg)
